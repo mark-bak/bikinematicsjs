@@ -16,6 +16,7 @@ def solve():
     data = json.loads(request.args['bike_data'])
     sim_travel = float(request.args['sim_travel'])
     desired_outputs = json.loads(request.args['desired_outputs'])
+    print(desired_outputs)
 
     sol_name = 'api_call'
     b = Bike(data)
@@ -23,5 +24,5 @@ def solve():
     b.calculate_suspension_characteristics(sol_name)
     ret={}
     for output in desired_outputs:
-        ret[output] = b.solution[sol_name][output].tolist()
+        ret[output.replace(" ","")] = b.solution[sol_name][output].tolist()
     return ret
