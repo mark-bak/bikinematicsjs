@@ -4,6 +4,7 @@ import './App.css';
 function App() {
 
   const [solution,setSolution] = useState(0);
+  const [save_response,setSave_response] = useState('loading')
 
   //HARDCODED data - eventually this will come from UI
   const bike_data = {
@@ -164,6 +165,14 @@ function App() {
     });
   },[]);
 
+  useEffect(() => {
+    fetch(`/savebikedata?bike_data=${encodeURIComponent(JSON.stringify(bike_data))}`)
+    .then(res => res.json())
+    .then(data => {setSave_response(data);
+    });
+  },[]);
+
+
   //React components
   function SolutionList(props) {
     const sol = props.sol;
@@ -183,6 +192,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <p>{save_response}</p>
         <p>
           <SolutionList sol = {solution.LeverageRatio}/>
         </p>
