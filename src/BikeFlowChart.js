@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
-  addEdge,
+  Handle,
   removeElements,
   Controls,
   Background,
@@ -11,13 +11,24 @@ import ToolbarFlow from './ToolbarFlow'
 
 import './dnd.css';
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;  
+  let id = 0;
+  const getId = () => `dndnode_${id++}`;  
 
 
   const initialElements = [
-
   ];
+
+  const CustomNode = ({ id }) => (
+    <>
+      <Handle type="target" position="bottom" />
+      <div>{id}</div>
+      <Handle type="source" position="bottom" />
+    </>
+  );
+
+  const nodeTypes = {
+    customnode: CustomNode,
+  };
 
   export default function BikeFlowChart(){
 
@@ -64,8 +75,8 @@ const getId = () => `dndnode_${id++}`;
           },
           data: {label: (
               <>
-              <text>Point {id} {"\n"}</text>
-              <text>({pointType}) </text>
+              Point {id} {"\n"}
+              *{pointType}* 
               </>
             ),},
         };
@@ -84,6 +95,7 @@ const getId = () => `dndnode_${id++}`;
             onLoad={onLoad}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            nodeTypes={nodeTypes}
           >
             <Controls />
             <Background />

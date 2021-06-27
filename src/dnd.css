@@ -2,6 +2,7 @@
     flex-direction: column;
     display: flex;
     height: 100%;
+    text-align: center;
   }
   
   .dndflow aside {
