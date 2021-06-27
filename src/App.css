@@ -1,38 +1,31 @@
+/*https://coolors.co/0d1f2d-546a7b-9ea3b0-fae1df-e4c3ad*/
+
 .App {
-  text-align: center;
+  text-align: left;
+  color: #fae1df;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.grid-container {
+  background-color: #0d1f2d;
+  display: grid;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  grid-template-columns: 20% 20% 1fr;
+  grid-template-rows: 1fr;
+
+  grid-template-areas: "left mid right";
+
+  height: 100vh;
+
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .left{
+    grid-area: left;
   }
-  to {
-    transform: rotate(360deg);
+
+  .right{
+    grid-area: right;
   }
-}
+
+  .mid{
+    grid-area: mid;
+  }
