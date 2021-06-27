@@ -37,17 +37,17 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-@app.route('/')
+@app.route('/api')
 def index():
     return {'Status':'OK'}
 
-@app.route('/solve')
+@app.route('/api/solve')
 def solve():
     """
     Need to look at input error chacking and output error checking
     """
     data = json.loads(request.args['bike_data'])
-    if data != 'empty':
+    if data:
         #data = json.loads(data)
         sim_travel = float(request.args['sim_travel'])
         desired_outputs = json.loads(request.args['desired_outputs'])
@@ -60,15 +60,15 @@ def solve():
         for output in desired_outputs:
             ret[output.replace(" ","")] = b.solution[sol_name][output].tolist()
         return ret
-    return {'msg':'Could not save'}
+    return {}
 
-@app.route('/getbikedata')
+@app.route('/api/getbikedata')
 def get_bike_data():
     #data = json.loads(request.args['id_no'])
     dbquery = query_db("SELECT * FROM bike_data WHERE id_no=1 ",one=True)
     return dbquery['data']
 
-@app.route('/savebikedata')
+@app.route('/api/savebikedata')
 def save_bike_data():
     data = json.loads(request.args['bike_data'])
     if data != 'empty':
