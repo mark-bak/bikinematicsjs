@@ -9,11 +9,10 @@ import {
     ResponsiveContainer,
   } from 'recharts';
  
-function _linspace(end,number){
-  const sf = end/(number-1);
-  console.log("keep your nose out of my webpage :)")
-  return [...Array(Math.ceil(number)).keys()].map(i => Math.round(i*sf))
-}
+const _linspace = (end,number) => (
+  [...Array(Math.ceil(number)).keys()] //create array of n nonnegative integers
+  .map(i => Math.round(i*(end/(number-1)))) //scale up to desired end length
+)
 
 export default function SyncLineChart(props) {
 

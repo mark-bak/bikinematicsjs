@@ -9,7 +9,7 @@
   background-color: #0d1f2d;
   display: grid;
 
-  grid-template-columns: 20% 20% 1fr;
+  grid-template-columns: 50% 10% 1fr;
   grid-template-rows: 1fr;
 
   grid-template-areas: "left mid right";

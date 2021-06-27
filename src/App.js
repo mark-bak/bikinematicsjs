@@ -1,25 +1,23 @@
 import React, { useMemo,useState , useEffect } from 'react';
 import './App.css';
 import SyncLineChart from './SyncLineChart';
+import BikeFlowChart from './BikeFlowChart';
+
 
 function App() {
 
-  const [bike_data,setBike_data] = useState(null)
+  const [bike_data,setBike_data] = useState(null);
   const [solution,setSolution] = useState({});
 
 
   const travel = 170;
   const results = ["Leverage Ratio", 'Anti Squat Percent',"Vertical Travel"];
 
-  //NON HARDCODED (now hopefully) data - eventually this will come from UI
-  
-  //HOOKS
-  //get bike data from database -> need to code in id_no
   useEffect(() => {
     loadBikeData();
   },[]);
 
-  function loadBikeData() {
+  const loadBikeData =  () => {
     fetch(`/api/getbikedata`)
     .then(res => res.json())
     .then(data => {setBike_data(data);
@@ -34,16 +32,15 @@ function App() {
     });
   },[bike_data]);
  
-  function isEmpty(obj){
-    return Object.keys(obj).length === 0;
-  }
+  const isEmpty = (obj) => (
+    Object.keys(obj).length === 0
+  );
 
-  function dataToChartFormat(data) {
-    const ret = (isEmpty(data) ? [] : _format(data));
-    return ret;
-  }
+  const dataToChartFormat = (data) => (
+    (isEmpty(data) ? [] : _format(data))
+  );
 
-  function _format(data){
+  const _format = (data) => {
     let r = [];
     for (let i = 0; i < Object.values(data)[0].length; i++){
       let dpoint = {}
@@ -53,15 +50,17 @@ function App() {
       r.push(dpoint)
     }
     return r;
-  }
+  };
 
   //Rendering
   return (
     <div className="App">
       <div class = "grid-container">
-        <div class = "left"><pre>{JSON.stringify(bike_data,null,2)}</pre></div>
+        <div class = "left">
+          <BikeFlowChart/>
+        </div>
         <div class = "mid">
-          <pre>{JSON.stringify(dataToChartFormat(solution),null,2)}</pre>
+          <pre>{JSON.stringify(bike_data,null,2)}</pre>
         </div>
         <div class = "right">
           <SyncLineChart 
