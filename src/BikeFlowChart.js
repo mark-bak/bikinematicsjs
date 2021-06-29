@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
-  Handle,
   removeElements,
   Controls,
   Background,
+  addEdge,
   } from 'react-flow-renderer';
 
 import ToolbarFlow from './ToolbarFlow'
@@ -14,28 +14,27 @@ import './dnd.css';
   let id = 0;
   const getId = () => `dndnode_${id++}`;  
 
-
   const initialElements = [
   ];
 
-  const CustomNode = ({ id }) => (
-    <>
-      <Handle type="target" position="bottom" />
-      <div>{id}</div>
-      <Handle type="source" position="bottom" />
-    </>
-  );
-
-  const nodeTypes = {
-    customnode: CustomNode,
-  };
-
   export default function BikeFlowChart(){
+
+    const[select0,setSelect0] = useState(null);
+    const[select1,setSelect1] = useState(null);
 
     const reactFlowWrapper = useRef(null);
 
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
+    
+    const addLink = () => {
+      const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight'}
+      setElements((els) => addEdge(params, els))
+    }
+
+    const clearAll = () => {
+      setElements([])
+    }
     
     //const onConnect = (params) => setElements((els) => addEdge(params, els));
     const onElementsRemove = (elementsToRemove) =>
@@ -66,19 +65,13 @@ import './dnd.css';
           y: event.clientY ,
         });
         const newNode = {
-          id: getId(),
-          type,
-          position,
-          connectable:false,
+          id: getId(), type, position, connectable:false,
           style: {
             width: width
           },
-          data: {label: (
-              <>
-              Point {id} {"\n"}
-              *{pointType}* 
-              </>
-            ),},
+          data: {
+            label: (  <>Point {id} {"\n"} *{pointType}* </>)
+          },
         };
         setElements((es) => es.concat(newNode));
       }
@@ -95,13 +88,13 @@ import './dnd.css';
             onLoad={onLoad}
             onDrop={onDrop}
             onDragOver={onDragOver}
-            nodeTypes={nodeTypes}
+            //nodeTypes={nodeTypes}
           >
             <Controls />
             <Background />
           </ReactFlow>
         </div>
-      <ToolbarFlow />
+      <ToolbarFlow addLink = {addLink} clearAll = {clearAll} setSelect0 = {setSelect0} setSelect1 = {setSelect1}/>
       </ReactFlowProvider>
       
     </div>

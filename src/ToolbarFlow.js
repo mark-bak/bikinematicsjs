@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-import { useStoreState, useStoreActions, addEdge } from 'react-flow-renderer';
+import { useStoreState} from 'react-flow-renderer';
 
-export default function ToolbarFlow () {
+export default function ToolbarFlow ({addLink,clearAll,setSelect0,setSelect1}) {
 
-  const[select0,setSelect0] = useState(null);
-  const[select1,setSelect1] = useState(null);
+
+
   const nodes = useStoreState((store) => store.nodes);
 
   const onDragStart = (event, nodeType,pointType) => {
@@ -20,8 +20,7 @@ export default function ToolbarFlow () {
   //unused atm
   const _onSelect0 = (option) => setSelect0(option.value);
   const _onSelect1 = (option) => setSelect1(option.value);
-  const _addLink = () => addEdge({},[select0,select1]);
-
+  
   const _nodesDroplist = () => {
     const list = (nodes.length ? nodes.map( (node) => ({value: node.id, label: node.data.label})) : [])
     return list
@@ -30,7 +29,7 @@ export default function ToolbarFlow () {
   return (
     <aside>
       <div className="description">Points: drag and drop!</div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'customnode','linkage')} draggable>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','linkage')} draggable>
         Linkage Point
       </div>
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','ground')} draggable>
@@ -56,9 +55,12 @@ export default function ToolbarFlow () {
                 value={"Select link"} 
                 placeholder="Select link"
       />
-      <button onClick={_addLink}>  
+      <button onClick={addLink}>  
         Add Link!
       </button>      
+      <button onClick={clearAll}>  
+        Clear All!
+      </button> 
 
       <div>
       {/* all the random shit goes here*/}
@@ -67,9 +69,7 @@ export default function ToolbarFlow () {
             {node.data.label} {"\n"}
             x: {node.__rf.position.x.toFixed(2)}, y: {node.__rf.position.y.toFixed(2)} 
           </div>
-        ))}
-        {select0}{select1}
-        
+        ))}        
       </div>
     </aside>
   );
