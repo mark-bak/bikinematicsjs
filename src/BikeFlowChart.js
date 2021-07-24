@@ -5,6 +5,7 @@ import ReactFlow, {
   Controls,
   Background,
   addEdge,
+  useStoreState 
   } from 'react-flow-renderer';
 
 import ToolbarFlow from './ToolbarFlow'
@@ -17,6 +18,8 @@ import './dnd.css';
   const initialElements = [
   ];
 
+  const img_link = 'https://ep1.pinkbike.org/p5pb20979226/p5pb20979226.jpg';
+
   export default function BikeFlowChart(){
 
     const[select0,setSelect0] = useState(null);
@@ -26,9 +29,15 @@ import './dnd.css';
 
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
+
     
     const addLink = () => {
       const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight'}
+      setElements((els) => addEdge(params, els))
+    }
+
+    const addShock = () => {
+      const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight',style: { stroke: 'red' }}
       setElements((els) => addEdge(params, els))
     }
 
@@ -47,6 +56,9 @@ import './dnd.css';
       event.preventDefault();
       event.dataTransfer.dropEffect = 'move';
     };
+
+    const zoom = reactFlowWrapper.current
+    console.log(zoom)
 
     const onDrop = (event) => {
       event.preventDefault();
@@ -79,24 +91,30 @@ import './dnd.css';
 
     return(
       <div className="dndflow">
-      <ReactFlowProvider>
-        <div className="reactflow-wrapper" ref = {reactFlowWrapper}>
-          <ReactFlow
-            elements={elements}
-            //onConnect={onConnect}
-            onElementsRemove={onElementsRemove}
-            onLoad={onLoad}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            //nodeTypes={nodeTypes}
-          >
-            <Controls />
-            <Background />
-          </ReactFlow>
-        </div>
-      <ToolbarFlow addLink = {addLink} clearAll = {clearAll} setSelect0 = {setSelect0} setSelect1 = {setSelect1}/>
-      </ReactFlowProvider>
-      
+        <ReactFlowProvider>
+          <div className="reactflow-wrapper" ref = {reactFlowWrapper}>
+            <ReactFlow
+              elements={elements}
+              //onConnect={onConnect}
+              onElementsRemove={onElementsRemove}
+              onLoad={onLoad}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              ba
+              //nodeTypes={nodeTypes}
+            >
+              <Controls />
+              <Background style={ { backgroundImage: `url(${img_link})`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: `100% auto`}}/>
+            </ReactFlow>
+          </div>
+        <ToolbarFlow addLink = {addLink}
+                    addShock = {addShock} 
+                    clearAll = {clearAll} 
+                    setSelect0 = {setSelect0} 
+                    setSelect1 = {setSelect1}/>
+        </ReactFlowProvider>
     </div>
     );
   }

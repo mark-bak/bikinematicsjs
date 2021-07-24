@@ -5,7 +5,7 @@ import 'react-dropdown/style.css';
 
 import { useStoreState} from 'react-flow-renderer';
 
-export default function ToolbarFlow ({addLink,clearAll,setSelect0,setSelect1}) {
+export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSelect1}) {
 
 
 
@@ -58,6 +58,9 @@ export default function ToolbarFlow ({addLink,clearAll,setSelect0,setSelect1}) {
       <button onClick={addLink}>  
         Add Link!
       </button>      
+      <button onClick={addShock}>  
+        Add Shock!
+      </button>  
       <button onClick={clearAll}>  
         Clear All!
       </button> 
