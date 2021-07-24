@@ -58,7 +58,7 @@ def solve():
         b.calculate_suspension_characteristics(sol_name)
         ret={}
         for output in desired_outputs:
-            ret[output.replace(" ","")] = b.solution[sol_name][output].tolist()
+            ret[output] = b.solution[sol_name][output].tolist()
         return ret
     return {}
 

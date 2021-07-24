@@ -11,12 +11,13 @@
     "react-dropdown": "^1.9.2",
     "react-flow-renderer": "^9.6.2",
     "react-scripts": "4.0.3",
-    "recharts": "^2.0.9",
+    "recharts": "^2.0.10",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "start-api": "cd api && .env/Scripts/flask run --no-debugger",
+    "start-api-linux": "cd api && .env/bin/flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

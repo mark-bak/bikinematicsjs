@@ -11,7 +11,7 @@ function App() {
 
 
   const travel = 170;
-  const results = ["Leverage Ratio", 'Anti Squat Percent',"Vertical Travel"];
+  const results = ["LeverageRatio", 'AntiSquatPercent',"VerticalTravel"];
 
   useEffect(() => {
     loadBikeData();
