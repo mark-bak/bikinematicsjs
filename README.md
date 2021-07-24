@@ -1,3 +1,9 @@
+# Required installs
+
+```
+pip install git+https://github.com/mark-bak/bikinematicsolver.git #Solver module - not on PyPi yet - will probably get an error when dling requirement.txt because of this - haven't tested this yet
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
