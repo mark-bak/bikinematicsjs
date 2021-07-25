@@ -9,15 +9,11 @@ export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSe
 
   const nodes = useStoreState((store) => store.nodes);
   const edges = useStoreState((store) => store.edges);
-  console.log(nodes);
-  console.log(edges);
-
 
   const [bikeData,setBikeData] = useState({}); //needs to be moved up higher in tree at some point
 
-  const onDragStart = (event, nodeType,pointType) => {
+  const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/nodeType', nodeType);
-    event.dataTransfer.setData('application/pointType',pointType)
     event.dataTransfer.effectAllowed = 'move';
   };
 
@@ -29,21 +25,23 @@ export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSe
     return list
   }
 
-  const nodesToBikeData = () => {
-    const points =  Object.assign({}, ...nodes.map((node) => 
-                                          ({[node.id]:
-                                            {name: node.id,
-                                             type: 'fix this later',
-                                             pos: [node.position.x,node.position.y]}
-                                          })
-                                        ));
-    const links = Object.assign({}, ...edges.map((edge) => 
-                                        ({[edge.id]:
-                                          {name: edge.id,
-                                           a: edge.source,
-                                           b: edge.target}
-                                        })
-                                      ));
+  const nodesToBikeData = () => { //this might also need moved higher in heirarchy
+    const points =  
+      Object.assign({},
+        ...nodes.map((node) => (
+          {[node.id]: {name: node.id,
+                        type: node.type,
+                        pos: [node.position.x,node.position.y]}}
+        ))
+      );
+    const links = 
+      Object.assign({},
+        ...edges.map((edge) => (
+          {[edge.id]:{name: edge.id,
+                       a: edge.source,
+                       b: edge.target}}
+        ))
+      );
     const data = {points:points,links:links};
     setBikeData(data);
   }
@@ -51,19 +49,19 @@ export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSe
   return (
     <aside>
       <div className="description">Points: drag and drop!</div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','linkage')} draggable>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'linkage')} draggable>
         Linkage Point
       </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','ground')} draggable>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'ground')} draggable>
         Ground Point
       </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','rear_wheel')} draggable>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'rear_wheel')} draggable>
         Rear Wheel
       </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','front_wheel')} draggable>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'front_wheel')} draggable>
         Front Wheel
       </div>
-      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'input','bottom_bracket')} draggable>
+      <div className="dndnode" onDragStart={(event) => onDragStart(event, 'bottom_bracket')} draggable>
         Bottom bracket 
       </div>
       <div className="description">Add links!</div>

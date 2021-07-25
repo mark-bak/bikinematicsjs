@@ -9,7 +9,6 @@ function App() {
   const [bike_data,setBike_data] = useState(null);
   const [solution,setSolution] = useState({});
 
-
   const travel = 170;
   const results = ["LeverageRatio", 'AntiSquatPercent',"VerticalTravel"];
 
@@ -26,7 +25,10 @@ function App() {
 
   //solves bike_data whenever it changes
   useEffect(() => {
-    fetch(`/api/solve?bike_data=${encodeURIComponent(JSON.stringify(bike_data))}&sim_travel=${encodeURIComponent(travel)}&desired_outputs=${encodeURIComponent(JSON.stringify(results))}`)
+    fetch(`/api/solve
+                    ?bike_data=${encodeURIComponent(JSON.stringify(bike_data))}
+                    &sim_travel=${encodeURIComponent(travel)}
+                    &desired_outputs=${encodeURIComponent(JSON.stringify(results))}`)
     .then(res => res.json())
     .then(data => {setSolution(data);
     });
@@ -65,9 +67,9 @@ function App() {
         <div class = "right">
           <SyncLineChart 
             data={dataToChartFormat(solution)}
-            leverage_ratio_key = "LeverageRatio" 
-            anti_squat_key = "AntiSquatPercent"
-            travel_key = "VerticalTravel"
+            leverage_ratio_key = {results[0]} 
+            anti_squat_key = {results[1]} 
+            travel_key = {results[2]} 
           />
         </div>
       </div>

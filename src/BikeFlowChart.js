@@ -9,16 +9,19 @@ import ReactFlow, {
   } from 'react-flow-renderer';
 
 import ToolbarFlow from './ToolbarFlow'
+import { CustomNode } from './CustomNodes';
 
 import './dnd.css';
 
+  
+  //id system to be used by nodes in 'flowchart' used to represent bike geo
   let id = 0;
   const getId = () => `Point_${id++}`;  
 
-  const initialElements = [
-  ];
+  //start with no geo
+  const initialElements = [];
 
-  const img_link = 'https://ep1.pinkbike.org/p5pb20979226/p5pb20979226.jpg';
+  const img_link = 'https://ep1.pinkbike.org/p5pb20979226/p5pb20979226.jpg'; //UNHARDCODE later
 
   export default function BikeFlowChart(){
 
@@ -30,10 +33,12 @@ import './dnd.css';
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
 
-    
+    //flowchart element adding and removing fcns
     const addLink = () => {
-      const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight'}
-      setElements((els) => addEdge(params, els))
+      if (select0===select1) {} //do nothing if equal
+      else{
+        const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight'}
+        setElements((els) => addEdge(params, els))}
     }
 
     const addShock = () => {
@@ -45,7 +50,6 @@ import './dnd.css';
       setElements([])
     }
     
-    //const onConnect = (params) => setElements((els) => addEdge(params, els));
     const onElementsRemove = (elementsToRemove) =>
       setElements((els) => removeElements(elementsToRemove, els));
   
@@ -57,38 +61,42 @@ import './dnd.css';
       event.dataTransfer.dropEffect = 'move';
     };
 
-    const zoom = reactFlowWrapper.current
-    console.log(zoom)
-
+    //create chart element when dropped over from sidebar
     const onDrop = (event) => {
       event.preventDefault();
       
       if (reactFlowInstance){
+
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-        const nodeType = event.dataTransfer.getData('application/nodeType');
+        const type = event.dataTransfer.getData('application/nodeType');
         const pointType = event.dataTransfer.getData('application/pointType');
-        console.log(nodeType)
-        console.log(pointType)
-        const type = nodeType
         const width = 100
 
         const position = reactFlowInstance.project({
           x: event.clientX-width*(2/3) , //should do this properly but 2/3 kinda works
           y: event.clientY ,
         });
-        const p_id = getId();
+        const point_id = getId();
         const newNode = {
-          id: p_id, type, position, connectable:false,
+          id: point_id, type, position, connectable:false,
           style: {
             width: width
           },
           data: {
-            label: (  <> {p_id} {"\n"} *{pointType}* </>)
+            label: (  <> {point_id} {"\n"} {type} </>)
           },
         };
         setElements((es) => es.concat(newNode));
       }
     };    
+
+    const nodeTypes = {
+      linkage: CustomNode,
+      ground: CustomNode,
+      rear_wheel: CustomNode,
+      front_wheel: CustomNode,
+      bottom_bracket: CustomNode
+    }
 
     return(
       <div className="dndflow">
@@ -102,15 +110,15 @@ import './dnd.css';
               onDrop={onDrop}
               onDragOver={onDragOver}
               ba
-              //nodeTypes={nodeTypes}
+              nodeTypes={nodeTypes}
             >
-              <Controls />
-              <Background style={ { backgroundImage: `url(${img_link})`,
+            <Controls />
+            <Background style={ { backgroundImage: `url(${img_link})`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: `100% auto`}}/>
             </ReactFlow>
           </div>
-        <ToolbarFlow addLink = {addLink}
+          <ToolbarFlow addLink = {addLink}
                     addShock = {addShock} 
                     clearAll = {clearAll} 
                     setSelect0 = {setSelect0} 
