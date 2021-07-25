@@ -25,10 +25,7 @@ function App() {
 
   //solves bike_data whenever it changes
   useEffect(() => {
-    fetch(`/api/solve
-                    ?bike_data=${encodeURIComponent(JSON.stringify(bike_data))}
-                    &sim_travel=${encodeURIComponent(travel)}
-                    &desired_outputs=${encodeURIComponent(JSON.stringify(results))}`)
+    fetch(`/api/solve?bike_data=${encodeURIComponent(JSON.stringify(bike_data))}&sim_travel=${encodeURIComponent(travel)}&desired_outputs=${encodeURIComponent(JSON.stringify(results))}`)
     .then(res => res.json())
     .then(data => {setSolution(data);
     });
