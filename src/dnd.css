@@ -31,7 +31,7 @@
     text-align: center;
     background: rgba(0,0, 0,0);
     color: #9EA3B0;
-    border: 1px solid rgba(0,0,0,1); 
+    border: 1px solid rgba(0,0,0,0); 
   }
 
   .dndflow .react-flow__node {

@@ -13,7 +13,7 @@ import ToolbarFlow from './ToolbarFlow'
 import './dnd.css';
 
   let id = 0;
-  const getId = () => `dndnode_${id++}`;  
+  const getId = () => `Point_${id++}`;  
 
   const initialElements = [
   ];
@@ -76,13 +76,14 @@ import './dnd.css';
           x: event.clientX-width*(2/3) , //should do this properly but 2/3 kinda works
           y: event.clientY ,
         });
+        const p_id = getId();
         const newNode = {
-          id: getId(), type, position, connectable:false,
+          id: p_id, type, position, connectable:false,
           style: {
             width: width
           },
           data: {
-            label: (  <>Point {id} {"\n"} *{pointType}* </>)
+            label: (  <> {p_id} {"\n"} *{pointType}* </>)
           },
         };
         setElements((es) => es.concat(newNode));
