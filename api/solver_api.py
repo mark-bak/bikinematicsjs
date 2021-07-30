@@ -59,6 +59,7 @@ def solve():
         ret={}
         for output in desired_outputs:
             ret[output] = b.solution[sol_name][output].tolist()
+        print(ret)
         return ret
     return {}
 

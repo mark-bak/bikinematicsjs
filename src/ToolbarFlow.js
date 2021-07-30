@@ -7,7 +7,7 @@ import { useStoreState} from 'react-flow-renderer';
 
 export default function ToolbarFlow ({addLink,
                                       addShock,
-                                      clearAll,
+                                      shock,
                                       setSelect0,
                                       setSelect1,
                                       nodesToBikeData,
@@ -88,7 +88,7 @@ export default function ToolbarFlow ({addLink,
           </div>
         ))}   
       </div>
-      <button onClick = {() => setBikeData(nodesToBikeData(nodes,edges))}>
+      <button onClick = {() => setBikeData(nodesToBikeData(nodes,edges,shock))}>
         updateBikeData
       </button>
     </aside>

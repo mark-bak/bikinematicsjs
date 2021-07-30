@@ -34,8 +34,7 @@ function App() {
   const solveBikeData = () => {
     fetch(`/api/solve?bike_data=${encodeURIComponent(JSON.stringify(bikeData))}&sim_travel=${encodeURIComponent(travel)}&desired_outputs=${encodeURIComponent(JSON.stringify(results))}`)
     .then(res => res.json())
-    .then(data => {setSolution(data);
-    });
+    .then(data => setSolution(data));
   };
  
 
@@ -59,13 +58,13 @@ function App() {
     return r;
   };
 
-  const nodesToBikeData = (nodes,edges) => { 
+  const nodesToBikeData = (nodes,edges,shock) => { 
     const points =  
       Object.assign({},
         ...nodes.map((node) => (
           {[node.id]: {name: node.id,
                         type: node.type,
-                        pos: [node.position.x,node.position.y]}}
+                        pos: [node.__rf.position.x,node.__rf.position.y]}}
         ))
       );
     const links = 
@@ -76,7 +75,17 @@ function App() {
                        b: edge.target}}
         ))
       );
-    const data = {points:points,links:links};
+    
+      const params = {
+        wheelbase: 1255,
+        chainring_teeth: 30,
+        cassette_teeth: 52,
+        wheel_size: 29,
+        p2mm: 1.3379530916844349,
+        cog_height: 1100
+        }; //unhardcode these i beg you at some point
+
+    const data = {points:points,links:links,shock:shock,params:params};
     return(data);
   }
 

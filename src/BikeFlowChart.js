@@ -33,6 +33,7 @@ import './dnd.css';
 
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
+    const [shock,setShock] = useState("");
 
     //flowchart element adding and removing fcns
     const addLink = () => {
@@ -111,10 +112,10 @@ import './dnd.css';
       setElements((es) => es.concat(newNodes));
 
       for (let l in links) {
-        const params = {id: `${links[l]["a"]}-${links[l]["b"]}`,source: links[l]["a"],target: links[l]["b"],type: 'straight'}
+        const params = {id: links[l]["name"],source: links[l]["a"],target: links[l]["b"],type: 'straight'}
         setElements((es) => addEdge(params,es))
       }
-      
+      setShock(data["shock"])
     };
 
     const nodeTypes = {
@@ -136,17 +137,17 @@ import './dnd.css';
               onLoad={onLoad}
               onDrop={onDrop}
               onDragOver={onDragOver}
-              ba
               nodeTypes={nodeTypes}
             >
             <Controls />
-            <Background style={ { backgroundImage: `url(${img_link})`,
+            <Background style={ { backgroundImage: "",//`url(${img_link})`,
                                   backgroundRepeat: 'no-repeat',
                                   backgroundSize: `100% auto`}}/>
             </ReactFlow>
           </div>
           <ToolbarFlow addLink = {addLink}
                     addShock = {addShock} 
+                    shock = {shock}
                     clearAll = {clearAll} 
                     setSelect0 = {setSelect0} 
                     setSelect1 = {setSelect1}
