@@ -1,16 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 import { useStoreState} from 'react-flow-renderer';
 
-export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSelect1}) {
+export default function ToolbarFlow ({addLink,
+                                      addShock,
+                                      clearAll,
+                                      setSelect0,
+                                      setSelect1,
+                                      nodesToBikeData,
+                                      loadBikeData,
+                                      bikeData,
+                                      setBikeData}) {
 
   const nodes = useStoreState((store) => store.nodes);
   const edges = useStoreState((store) => store.edges);
 
-  const [bikeData,setBikeData] = useState({}); //needs to be moved up higher in tree at some point
+  //const [convBikeData,setConvBikeData] = useState({}); //needs to be moved up higher in tree at some point
+
+  useEffect(()=>{
+    loadBikeData(bikeData)
+  },[bikeData]);                                    
 
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/nodeType', nodeType);
@@ -23,27 +35,6 @@ export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSe
   const _nodesDroplist = () => {
     const list = (nodes.length ? nodes.map( (node) => ({value: node.id, label: node.data.label})) : [])
     return list
-  }
-
-  const nodesToBikeData = () => { //this might also need moved higher in heirarchy
-    const points =  
-      Object.assign({},
-        ...nodes.map((node) => (
-          {[node.id]: {name: node.id,
-                        type: node.type,
-                        pos: [node.position.x,node.position.y]}}
-        ))
-      );
-    const links = 
-      Object.assign({},
-        ...edges.map((edge) => (
-          {[edge.id]:{name: edge.id,
-                       a: edge.source,
-                       b: edge.target}}
-        ))
-      );
-    const data = {points:points,links:links};
-    setBikeData(data);
   }
 
   return (
@@ -81,10 +72,6 @@ export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSe
       <button onClick={addShock}>  
         Add Shock!
       </button>  
-      <button onClick={clearAll}>  
-        Clear All!
-      </button> 
-
       <div>
       {/* all the random shit goes here*/}
         {nodes.map((node) => (
@@ -101,12 +88,9 @@ export default function ToolbarFlow ({addLink,addShock,clearAll,setSelect0,setSe
           </div>
         ))}   
       </div>
-      <button onClick = {nodesToBikeData}>
-        Convert!
+      <button onClick = {() => setBikeData(nodesToBikeData(nodes,edges))}>
+        updateBikeData
       </button>
-      <div>
-      <pre>{JSON.stringify(bikeData,null,2)}</pre>
-      </div>
     </aside>
   );
 };

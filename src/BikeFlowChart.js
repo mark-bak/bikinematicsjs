@@ -23,7 +23,8 @@ import './dnd.css';
 
   const img_link = 'https://ep1.pinkbike.org/p5pb20979226/p5pb20979226.jpg'; //UNHARDCODE later
 
-  export default function BikeFlowChart(){
+  export default function BikeFlowChart({nodesToBikeData,bikeData,setBikeData}){
+
 
     const[select0,setSelect0] = useState(null);
     const[select1,setSelect1] = useState(null);
@@ -69,7 +70,6 @@ import './dnd.css';
 
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
         const type = event.dataTransfer.getData('application/nodeType');
-        const pointType = event.dataTransfer.getData('application/pointType');
         const width = 100
 
         const position = reactFlowInstance.project({
@@ -78,7 +78,7 @@ import './dnd.css';
         });
         const point_id = getId();
         const newNode = {
-          id: point_id, type, position, connectable:false,
+          id: point_id, type, position, connectable:true,
           style: {
             width: width
           },
@@ -88,7 +88,34 @@ import './dnd.css';
         };
         setElements((es) => es.concat(newNode));
       }
-    };    
+    };
+    
+    const loadBikeData = (data) => {
+      clearAll()
+      if (data === null) {return};
+      const newNodes = [];
+      const points = data["points"];
+      const links = data["links"];
+      for (let p in points){
+        newNodes.push({id: points[p]["name"], 
+                      type: points[p]["type"],
+                      position: {x:points[p]["pos"][0],y:points[p]["pos"][1]},
+                      style: {
+                        width: 100
+                      },
+                      data: {
+                        label: (  <> {points[p]["name"]} {"\n"} {points[p]["type"]} </>)
+                      },
+        })
+      }
+      setElements((es) => es.concat(newNodes));
+
+      for (let l in links) {
+        const params = {id: `${links[l]["a"]}-${links[l]["b"]}`,source: links[l]["a"],target: links[l]["b"],type: 'straight'}
+        setElements((es) => addEdge(params,es))
+      }
+      
+    };
 
     const nodeTypes = {
       linkage: CustomNode,
@@ -114,15 +141,19 @@ import './dnd.css';
             >
             <Controls />
             <Background style={ { backgroundImage: `url(${img_link})`,
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: `100% auto`}}/>
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: `100% auto`}}/>
             </ReactFlow>
           </div>
           <ToolbarFlow addLink = {addLink}
                     addShock = {addShock} 
                     clearAll = {clearAll} 
                     setSelect0 = {setSelect0} 
-                    setSelect1 = {setSelect1}/>
+                    setSelect1 = {setSelect1}
+                    nodesToBikeData = {nodesToBikeData}
+                    loadBikeData = {loadBikeData}
+                    bikeData = {bikeData}
+                    setBikeData = {setBikeData}/>
         </ReactFlowProvider>
     </div>
     );
