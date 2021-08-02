@@ -44,8 +44,11 @@ import './dnd.css';
     }
 
     const addShock = () => {
-      const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight',style: { stroke: 'red' }}
-      setElements((els) => addEdge(params, els))
+      if (select0===select1) {} //do nothing if equal
+      else {
+        const params =  {id: `${select0}-${select1}`,source: select0,target: select1,type: 'straight',style: { stroke: 'red' }}
+        setElements((els) => addEdge(params, els))
+        setShock(params["id"])}
     }
 
     const clearAll = () => {
@@ -94,13 +97,14 @@ import './dnd.css';
     const loadBikeData = (data) => {
       clearAll()
       if (data === null) {return};
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
       const newNodes = [];
       const points = data["points"];
       const links = data["links"];
       for (let p in points){
         newNodes.push({id: points[p]["name"], 
                       type: points[p]["type"],
-                      position: {x:points[p]["pos"][0],y:points[p]["pos"][1]},
+                      position: {x:points[p]["pos"][0],y:reactFlowBounds.height - points[p]["pos"][1]},
                       style: {
                         width: 100
                       },
@@ -124,6 +128,11 @@ import './dnd.css';
       rear_wheel: CustomNode,
       front_wheel: CustomNode,
       bottom_bracket: CustomNode
+    }
+
+    const help = () =>{
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+      console.log(reactFlowBounds)
     }
 
     return(
@@ -154,7 +163,8 @@ import './dnd.css';
                     nodesToBikeData = {nodesToBikeData}
                     loadBikeData = {loadBikeData}
                     bikeData = {bikeData}
-                    setBikeData = {setBikeData}/>
+                    setBikeData = {setBikeData}
+                    reactFlowWrapper = {reactFlowWrapper}/>
         </ReactFlowProvider>
     </div>
     );

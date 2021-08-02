@@ -2,6 +2,7 @@ import React, { useMemo,useState , useEffect } from 'react';
 import './App.css';
 import SyncLineChart from './SyncLineChart';
 import BikeFlowChart from './BikeFlowChart';
+import Top from './Top';
 
 
 function App() {
@@ -12,12 +13,12 @@ function App() {
   const clearBikeData = () => {setBikeData(null)} 
   const clearSolutionData = () => {setSolution({})}
 
-  const travel = 170;
+  const travel = 170; //unhardcode as well pls
   const results = ["LeverageRatio", 'AntiSquatPercent',"VerticalTravel"];
 
-  useEffect(() => {
-    fetchBikeData();
-  },[]);
+  //useEffect(() => {
+  //  fetchBikeData();
+  //},[]);
 
   useEffect(() => {
     solveBikeData();
@@ -58,13 +59,13 @@ function App() {
     return r;
   };
 
-  const nodesToBikeData = (nodes,edges,shock) => { 
+  const nodesToBikeData = (nodes,edges,shock,y_offset) => { 
     const points =  
       Object.assign({},
         ...nodes.map((node) => (
           {[node.id]: {name: node.id,
                         type: node.type,
-                        pos: [node.__rf.position.x,node.__rf.position.y]}}
+                        pos: [node.__rf.position.x, y_offset - node.__rf.position.y]}}
         ))
       );
     const links = 
@@ -94,21 +95,17 @@ function App() {
   return (
     <div className="App">
       <div class = "grid-container">
+        <Top
+          fetchBikeData = {fetchBikeData}
+          clearBikeData = {clearBikeData}
+          clearSolutionData = {clearSolutionData}
+        />
         <div class = "left">
           <BikeFlowChart
             nodesToBikeData ={nodesToBikeData}
             bikeData = {bikeData}
             setBikeData = {setBikeData}
           />
-        </div>
-        <div class = "mid">
-          <button onClick = {fetchBikeData}>
-            fetchBikeData
-          </button>
-          <button onClick = {(() => {clearBikeData();clearSolutionData()})}>
-            clearBikeData
-          </button>
-          <pre style={{fontSize: "8px"}}>{JSON.stringify(bikeData,null,2)}</pre>
         </div>
         <div class = "right">
           <SyncLineChart 

@@ -13,7 +13,8 @@ export default function ToolbarFlow ({addLink,
                                       nodesToBikeData,
                                       loadBikeData,
                                       bikeData,
-                                      setBikeData}) {
+                                      setBikeData,
+                                      reactFlowWrapper}) {
 
   const nodes = useStoreState((store) => store.nodes);
   const edges = useStoreState((store) => store.edges);
@@ -88,9 +89,12 @@ export default function ToolbarFlow ({addLink,
           </div>
         ))}   
       </div>
-      <button onClick = {() => setBikeData(nodesToBikeData(nodes,edges,shock))}>
-        updateBikeData
+      <button onClick = {() => setBikeData(nodesToBikeData(nodes,edges,shock,reactFlowWrapper.current.getBoundingClientRect().height))}>
+        Update Charts
       </button>
+      <div>
+      add all the input parameters here
+      </div>
     </aside>
   );
 };
