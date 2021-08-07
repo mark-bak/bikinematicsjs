@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import './App.css'
 
 import { useStoreState} from 'react-flow-renderer';
 
@@ -14,7 +15,8 @@ export default function ToolbarFlow ({addLink,
                                       loadBikeData,
                                       bikeData,
                                       setBikeData,
-                                      reactFlowWrapper}) {
+                                      reactFlowWrapper,
+                                      clearAll}) {
 
   const nodes = useStoreState((store) => store.nodes);
   const edges = useStoreState((store) => store.edges);
@@ -72,6 +74,9 @@ export default function ToolbarFlow ({addLink,
       </button>      
       <button onClick={addShock}>  
         Add Shock!
+      </button>  
+      <button onClick={clearAll}>  
+        Clear
       </button>  
       <div>
       {/* all the random shit goes here*/}

@@ -36,3 +36,15 @@
   .mid{
     grid-area: mid;
   }
+
+.top-button {
+  color: #9EA3B0;
+  border-color: #9EA3B0;
+  background-color: #081421;
+  height: 100%;
+  width: 120px;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+}
+

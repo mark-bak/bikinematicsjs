@@ -97,14 +97,14 @@ function App() {
       <div class = "grid-container">
         <Top
           fetchBikeData = {fetchBikeData}
-          clearBikeData = {clearBikeData}
-          clearSolutionData = {clearSolutionData}
         />
         <div class = "left">
           <BikeFlowChart
             nodesToBikeData ={nodesToBikeData}
             bikeData = {bikeData}
             setBikeData = {setBikeData}
+            clearBikeData = {clearBikeData}
+            clearSolutionData = {clearSolutionData}
           />
         </div>
         <div class = "right">

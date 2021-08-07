@@ -23,7 +23,11 @@ import './dnd.css';
 
   const img_link = 'https://ep1.pinkbike.org/p5pb20979226/p5pb20979226.jpg'; //UNHARDCODE later
 
-  export default function BikeFlowChart({nodesToBikeData,bikeData,setBikeData}){
+  export default function BikeFlowChart({nodesToBikeData,
+                                         bikeData,
+                                         setBikeData,
+                                         clearBikeData,
+                                         clearSolutionData}) {
 
 
     const[select0,setSelect0] = useState(null);
@@ -52,6 +56,8 @@ import './dnd.css';
     }
 
     const clearAll = () => {
+      clearBikeData()
+      clearSolutionData()
       setElements([])
     }
     
