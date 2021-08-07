@@ -1,15 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect,useState, useRef } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   removeElements,
   Controls,
   Background,
   addEdge,
-  useStoreState 
   } from 'react-flow-renderer';
 
 import ToolbarFlow from './ToolbarFlow'
 import { CustomNode } from './CustomNodes';
+import BikeFlowUpdateHandler from './BikeFlowUpdateHandler';
 
 import './dnd.css';
 
@@ -23,8 +23,7 @@ import './dnd.css';
 
   const img_link = 'https://ep1.pinkbike.org/p5pb20979226/p5pb20979226.jpg'; //UNHARDCODE later
 
-  export default function BikeFlowChart({nodesToBikeData,
-                                         bikeData,
+  export default function BikeFlowChart({bikeData,
                                          setBikeData,
                                          clearBikeData,
                                          clearSolutionData}) {
@@ -38,6 +37,11 @@ import './dnd.css';
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
     const [elements, setElements] = useState(initialElements);
     const [shock,setShock] = useState("");
+    const [changeFlag,setChangeFlag] = useState(true)
+
+    useEffect(()=>{
+      loadBikeData(bikeData)
+    },[bikeData]);
 
     //flowchart element adding and removing fcns
     const addLink = () => {
@@ -59,6 +63,7 @@ import './dnd.css';
       clearBikeData()
       clearSolutionData()
       setElements([])
+      let id = 0;
     }
     
     const onElementsRemove = (elementsToRemove) =>
@@ -72,6 +77,10 @@ import './dnd.css';
       event.dataTransfer.dropEffect = 'move';
     };
 
+    const onChange = () => {
+      setChangeFlag(!changeFlag)
+    }
+
     //create chart element when dropped over from sidebar
     const onDrop = (event) => {
       event.preventDefault();
@@ -83,8 +92,8 @@ import './dnd.css';
         const width = 100
 
         const position = reactFlowInstance.project({
-          x: event.clientX-width*(2/3) , //should do this properly but 2/3 kinda works
-          y: event.clientY ,
+          x: event.clientX - reactFlowBounds.x - width/2,
+          y: event.clientY - reactFlowBounds.y,
         });
         const point_id = getId();
         const newNode = {
@@ -101,7 +110,7 @@ import './dnd.css';
     };
     
     const loadBikeData = (data) => {
-      clearAll()
+      setElements([])
       if (data === null) {return};
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
       const newNodes = [];
@@ -136,11 +145,6 @@ import './dnd.css';
       bottom_bracket: CustomNode
     }
 
-    const help = () =>{
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-      console.log(reactFlowBounds)
-    }
-
     return(
       <div className="dndflow">
         <ReactFlowProvider>
@@ -151,26 +155,31 @@ import './dnd.css';
               onElementsRemove={onElementsRemove}
               onLoad={onLoad}
               onDrop={onDrop}
+              onMouseUp = {onChange}
               onDragOver={onDragOver}
               nodeTypes={nodeTypes}
             >
             <Controls />
-            <Background style={ { backgroundImage: "",//`url(${img_link})`,
-                                  backgroundRepeat: 'no-repeat',
-                                  backgroundSize: `100% auto`}}/>
+            <Background 
+              style={ { backgroundImage: "",//`url(${img_link})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: `100% auto`}}/>
             </ReactFlow>
           </div>
-          <ToolbarFlow addLink = {addLink}
-                    addShock = {addShock} 
-                    shock = {shock}
-                    clearAll = {clearAll} 
-                    setSelect0 = {setSelect0} 
-                    setSelect1 = {setSelect1}
-                    nodesToBikeData = {nodesToBikeData}
-                    loadBikeData = {loadBikeData}
-                    bikeData = {bikeData}
-                    setBikeData = {setBikeData}
-                    reactFlowWrapper = {reactFlowWrapper}/>
+          <ToolbarFlow 
+            addLink = {addLink}
+            addShock = {addShock} 
+            clearAll = {clearAll} 
+            setSelect0 = {setSelect0} 
+            setSelect1 = {setSelect1}
+          />
+        <BikeFlowUpdateHandler
+          bikeData={bikeData}
+          setBikeData = {setBikeData}
+          changeFlag = {changeFlag}
+          shock = {shock}
+          reactFlowWrapper = {reactFlowWrapper}
+        />
         </ReactFlowProvider>
     </div>
     );

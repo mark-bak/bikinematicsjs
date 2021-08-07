@@ -6,10 +6,10 @@
   }
   
   .dndflow aside {
-    border-right: 1px solid #0D1F2D;
     padding: 15px 10px;
     font-size: 12px;
     background: #0D1F2D;
+    color: #9EA3B0;
   }
   
   .dndflow aside > * {
@@ -17,28 +17,62 @@
     cursor: grab;
     white-space: pre-wrap;
   }
-  
-  .dndflow aside .description {
-    margin-bottom: 10px;
+
+  .dndflow aside .button{
+    font-size: 12px;
+    height: 40px;
+    background-color: #9EA3B0;
+    color: #0D1F2D;
+    flex-direction: row;
+    width: 100%;
+    border: transparent;
+    border-radius: 1em;
+  }
+
+  .dndflow aside .dropdown{
+    background-color: #9EA3B0;
+    height: 40px;
+    color: #0D1F2D;
+    flex-direction: row;
+    width: 100%;
+    border: transparent;
+    font-size: 12px;
+  }
+
+  .dndflow aside .dropdown-menu{
+    font-size: 12px;
+    background-color: #9EA3B0;
+    color: #0D1F2D;
+    flex-direction: row;
+    width: 100%;
+    border: transparent;
   }
   
+  .dndflow aside .arrow{
+    border-color: #0D1F2D transparent transparent;
+  }
+
   .dndflow .reactflow-wrapper {
     flex-grow: 1;
     height: 100%;
   }
 
   .dndflow .dndnode {
+    font-size: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     text-align: center;
-    background: rgba(0,0, 0,0);
+    background: transparent;
     color: #9EA3B0;
-    border: 1px solid rgba(0,0,0,0); 
+    border: 1px solid #9EA3B0; 
+    border-radius: 1em;
   }
 
   .dndflow .react-flow__node {
     text-align: center;
-    background: rgba(255,255, 0,0);
+    background: transparent;
     color: #9EA3B0;
-    border: 1px solid rgba(0,0,0,0);  
+    border: transparent;  
     white-space: pre-wrap; 
     font-size: 10px;
   }

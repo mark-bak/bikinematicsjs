@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -8,14 +8,8 @@ import { useStoreState} from 'react-flow-renderer';
 
 export default function ToolbarFlow ({addLink,
                                       addShock,
-                                      shock,
                                       setSelect0,
                                       setSelect1,
-                                      nodesToBikeData,
-                                      loadBikeData,
-                                      bikeData,
-                                      setBikeData,
-                                      reactFlowWrapper,
                                       clearAll}) {
 
   const nodes = useStoreState((store) => store.nodes);
@@ -23,9 +17,7 @@ export default function ToolbarFlow ({addLink,
 
   //const [convBikeData,setConvBikeData] = useState({}); //needs to be moved up higher in tree at some point
 
-  useEffect(()=>{
-    loadBikeData(bikeData)
-  },[bikeData]);                                    
+                                   
 
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/nodeType', nodeType);
@@ -42,7 +34,8 @@ export default function ToolbarFlow ({addLink,
 
   return (
     <aside>
-      <div className="description">Points: drag and drop!</div>
+      <div className="title">Add Points:</div>
+      <div className = "description">Drag to add</div>
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'linkage')} draggable>
         Linkage Point
       </div>
@@ -58,24 +51,37 @@ export default function ToolbarFlow ({addLink,
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'bottom_bracket')} draggable>
         Bottom bracket 
       </div>
-      <div className="description">Add links!</div>
-      <Dropdown options = {_nodesDroplist()}
-                onChange={_onSelect0} 
-                value={"Select link"} 
-                placeholder="Select link"
+      <div className="title">Add links:</div>
+      <Dropdown 
+        className = "dropdown"
+        placeholderClassName = "dropdown"
+        controlClassName = "dropdown"
+        menuClassName = "dropdown-menu"
+        arrowClassName = "arrow"
+        options = {_nodesDroplist()}
+        onChange={_onSelect0} 
+        value={"Select link"} 
+        placeholder="Select link"
       />
-      <Dropdown options = {_nodesDroplist()}
-                onChange={_onSelect1}  
-                value={"Select link"} 
-                placeholder="Select link"
-      />
-      <button onClick={addLink}>  
+      <Dropdown 
+        className = "dropdown"
+        placeholderClassName = "dropdown"
+        controlClassName = "dropdown"
+        menuClassName = "dropdown-menu"
+        arrowClassName = "arrow"
+        options = {_nodesDroplist()}
+        onChange={_onSelect1}  
+        value={"Select link"} 
+        placeholder="Select link"
+      />   
+      <button className = "button" onClick={addLink}>  
         Add Link!
-      </button>      
-      <button onClick={addShock}>  
+      </button>   
+      <button className = "button" onClick={addShock}>  
         Add Shock!
       </button>  
-      <button onClick={clearAll}>  
+      <div className="title">Clear Data:</div>
+      <button className = "button" onClick={clearAll}>  
         Clear
       </button>  
       <div>
@@ -94,9 +100,6 @@ export default function ToolbarFlow ({addLink,
           </div>
         ))}   
       </div>
-      <button onClick = {() => setBikeData(nodesToBikeData(nodes,edges,shock,reactFlowWrapper.current.getBoundingClientRect().height))}>
-        Update Charts
-      </button>
       <div>
       add all the input parameters here
       </div>

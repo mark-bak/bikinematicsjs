@@ -8,26 +8,48 @@ import {
     Tooltip,
     ResponsiveContainer,
   } from 'recharts';
+
+import './App.css'
  
 const _linspace = (end,number) => (
   [...Array(Math.ceil(number)).keys()] //create array of n nonnegative integers
   .map(i => Math.round(i*(end/(number-1)))) //scale up to desired end length
 )
 
+const isEmpty = (obj) => (
+  Object.keys(obj).length === 0
+);
+
+const dataToChartFormat = (data) => (
+  (isEmpty(data) ? [] : _format(data))
+);
+
+const _format = (data) => {
+  let r = [];
+  for (let i = 0; i < Object.values(data)[0].length; i++){
+    let dpoint = {}
+    for (let sol_name in data){        
+      dpoint[sol_name] = data[sol_name][i]
+    }
+    r.push(dpoint)
+  }
+  return r;
+};
+
 export default function SyncLineChart(props) {
 
-  const data = props.data
+  const data = dataToChartFormat(props.data)
   const lr_key = props.leverage_ratio_key
   const travel_key = props.travel_key
   const as_key = props.anti_squat_key 
 
   const max_travel = (data.length>0 ? data[data.length-1][travel_key] : 0)
 
+
   return(
     <div style={{ width: '100%' }}>
-    <h4>Results:</h4>
-
-    <p>Leverage Ratio</p>
+    <div className = "title">Results:</div>
+    <div className = "description">Leverage Ratio</div>
 
     <ResponsiveContainer width="100%" height={450}>
       <LineChart
@@ -50,7 +72,7 @@ export default function SyncLineChart(props) {
       </LineChart>
     </ResponsiveContainer>
     
-    <p>Anti-Squat</p>
+    <div className = "description">Anti-Squat</div>
 
     <ResponsiveContainer width="100%" height={450}>
       <LineChart

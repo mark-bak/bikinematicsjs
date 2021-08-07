@@ -10,7 +10,7 @@
   display: grid;
 
   grid-template-columns: 50% 10% 1fr;
-  grid-template-rows: 5% 1fr;
+  grid-template-rows: 60px 1fr;
 
   grid-template-areas: 
     "top top top"
@@ -29,12 +29,14 @@
     grid-area: left;
   }
 
-  .right{
+  .right{  
+    padding: 15px 10px;
     grid-area: right;
   }
 
-  .mid{
-    grid-area: mid;
+  .right > * {
+    margin-bottom: 10px;
+    white-space: pre-wrap;
   }
 
 .top-button {
@@ -48,3 +50,14 @@
   border-left: none;
 }
 
+.description {
+  color: #9EA3B0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.title{
+  color: #9EA3B0;
+  font-size: 20px;
+  text-align: left;
+}
