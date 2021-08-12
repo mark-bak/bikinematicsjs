@@ -38,6 +38,14 @@ import './dnd.css';
     const [elements, setElements] = useState(initialElements);
     const [shock,setShock] = useState("");
     const [changeFlag,setChangeFlag] = useState(true)
+    const [params,setParams] = useState({
+      wheelbase: 1255,
+      chainring_teeth: 30,
+      cassette_teeth: 52,
+      wheel_size: 29,
+      p2mm: 1.3379530916844349,
+      cog_height: 1100
+    })
 
     useEffect(()=>{
       loadBikeData(bikeData)
@@ -172,6 +180,10 @@ import './dnd.css';
             clearAll = {clearAll} 
             setSelect0 = {setSelect0} 
             setSelect1 = {setSelect1}
+            params = {params}
+            setParams = {setParams}
+            changeFlag = {changeFlag}
+            setChangeFlag = {setChangeFlag}
           />
         <BikeFlowUpdateHandler
           bikeData={bikeData}
@@ -179,6 +191,7 @@ import './dnd.css';
           changeFlag = {changeFlag}
           shock = {shock}
           reactFlowWrapper = {reactFlowWrapper}
+          params = {params}
         />
         </ReactFlowProvider>
     </div>

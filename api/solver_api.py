@@ -48,24 +48,24 @@ def solve():
     """
     data = json.loads(request.args['bike_data'])
     if data:
-        #data = json.loads(data)
-        sim_travel = float(request.args['sim_travel'])
-        desired_outputs = json.loads(request.args['desired_outputs'])
+        try:
+            sim_travel = float(request.args['sim_travel'])
+            desired_outputs = json.loads(request.args['desired_outputs'])
 
-        sol_name = 'api_call'
-        b = Bike(data)
-        b.get_suspension_motion(sim_travel,sol_name)
-        b.calculate_suspension_characteristics(sol_name)
-        ret={}
-        for output in desired_outputs:
-            ret[output] = b.solution[sol_name][output].tolist()
-        print(ret)
-        return ret
+            sol_name = 'api_call'
+            b = Bike(data)
+            b.get_suspension_motion(sim_travel,sol_name)
+            b.calculate_suspension_characteristics(sol_name)
+            ret={}
+            for output in desired_outputs:
+                ret[output] = b.solution[sol_name][output].tolist()
+            return ret
+        except:
+            return {}
     return {}
 
 @app.route('/api/getbikedata')
 def get_bike_data():
-    #data = json.loads(request.args['id_no'])
     dbquery = query_db("SELECT * FROM bike_data WHERE id_no=1 ",one=True)
     return dbquery['data']
 

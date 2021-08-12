@@ -10,7 +10,11 @@ export default function ToolbarFlow ({addLink,
                                       addShock,
                                       setSelect0,
                                       setSelect1,
-                                      clearAll}) {
+                                      clearAll,
+                                      params,
+                                      setParams,
+                                      changeFlag,
+                                      setChangeFlag}) {
 
   const nodes = useStoreState((store) => store.nodes);
   const edges = useStoreState((store) => store.edges);
@@ -30,6 +34,13 @@ export default function ToolbarFlow ({addLink,
   const _nodesDroplist = () => {
     const list = (nodes.length ? nodes.map( (node) => ({value: node.id, label: node.data.label})) : [])
     return list
+  }
+
+  const updateWheelSize = (event) => {
+    const newParams = params
+    newParams['wheel_size'] = parseFloat(event.target.value)
+    setParams(newParams)
+    setChangeFlag(!changeFlag)
   }
 
   return (
@@ -101,7 +112,9 @@ export default function ToolbarFlow ({addLink,
         ))}   
       </div>
       <div>
-      add all the input parameters here
+      <input
+        onChange = {updateWheelSize} 
+        placeholder ="Wheel Size (in)"/>  
       </div>
     </aside>
   );

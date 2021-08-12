@@ -5,7 +5,8 @@ import {useStoreState} from 'react-flow-renderer';
 export default function BikeFlowUpdateHandler ({shock,
                                                 reactFlowWrapper,
                                                 setBikeData,
-                                                changeFlag}) {
+                                                changeFlag,
+                                                params}) {
 
     const nodes = useStoreState(store => store.nodes)
     const edges = useStoreState(store => store.edges)
@@ -40,16 +41,16 @@ export default function BikeFlowUpdateHandler ({shock,
             ))
         );
         
-        const params = {
-            wheelbase: 1255,
-            chainring_teeth: 30,
-            cassette_teeth: 52,
-            wheel_size: 29,
+        const pars = {
+            wheelbase: params.wheelbase,
+            chainring_teeth: params.chainring_teeth,
+            cassette_teeth: params.cassette_teeth,
+            wheel_size: params.wheel_size,
             p2mm: 1.3379530916844349,
-            cog_height: 1100
+            cog_height: params.cog_height
             }; //unhardcode these i beg you at some point
 
-        const data = {points:points,links:links,shock:shock,params:params};
+        const data = {points:points,links:links,shock:shock,params:pars};
         return(data);
     }
 

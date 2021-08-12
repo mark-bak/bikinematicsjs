@@ -16,11 +16,8 @@ function App() {
   const travel = 170; //unhardcode as well pls
   const results = ["LeverageRatio", 'AntiSquatPercent',"VerticalTravel"];
 
-  //useEffect(() => {
-  //  fetchBikeData();
-  //},[]);
-
   useEffect(() => {
+    console.log(bikeData)
     solveBikeData();
   },[bikeData]);
 
