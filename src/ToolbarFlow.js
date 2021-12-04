@@ -17,11 +17,7 @@ export default function ToolbarFlow ({addLink,
                                       setChangeFlag}) {
 
   const nodes = useStoreState((store) => store.nodes);
-  const edges = useStoreState((store) => store.edges);
-
-  //const [convBikeData,setConvBikeData] = useState({}); //needs to be moved up higher in tree at some point
-
-                                   
+  const edges = useStoreState((store) => store.edges);                            
 
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData('application/nodeType', nodeType);
@@ -36,9 +32,9 @@ export default function ToolbarFlow ({addLink,
     return list
   }
 
-  const updateWheelSize = (event) => {
+  const updateParameter = (value,param_key) => {
     const newParams = params
-    newParams['wheel_size'] = parseFloat(event.target.value)
+    newParams[param_key] = parseFloat(value)
     setParams(newParams)
     setChangeFlag(!changeFlag)
   }
@@ -113,8 +109,18 @@ export default function ToolbarFlow ({addLink,
       </div>
       <div>
       <input
-        onChange = {updateWheelSize} 
-        placeholder ="Wheel Size (in)"/>  
+        onChange = {(event) => updateParameter(event.target.value,'wheel_size')} 
+        placeholder ="Wheel Size (in)"/> 
+      </div>
+      <div>
+      <input
+        onChange = {(event) => updateParameter(event.target.value,'chainring_teeth')} 
+        placeholder ="Chainring Teeth"/> 
+      </div>
+      <div>
+      <input
+        onChange = {(event) => updateParameter(event.target.value,'cassette_teeth')} 
+        placeholder ="Cassette Teeth"/> 
       </div>
     </aside>
   );
