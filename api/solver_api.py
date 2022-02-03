@@ -5,6 +5,7 @@ from bikinematicsolver.bike import Bike #type: ignore
 
 import json
 import sqlite3
+import os
 
 ## Database management fcns shamelessly copied (and partially understood) from https://flask.palletsprojects.com/en/2.0.x/patterns/sqlite3/
 DATABASE = 'bikinematicsv1.db'
@@ -28,7 +29,10 @@ def write_db(query, args=()):
     get_db().commit()
     return {'msg':'write_db executed'}
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = './build', static_url_path = '/')
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
 
 @app.teardown_appcontext
 #close databse on context end
@@ -36,6 +40,14 @@ def close_connection(exception):
     db = getattr(g,'_database',None)
     if db is not None:
         db.close()
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route('/api')
 def index():
