@@ -1,1 +1,1 @@
-web: gunicorn app:solver_api
+web: gunicorn --chdir api solver_api:app
