@@ -1,1 +1,1 @@
-: gunicorn app:api/solver_api
+: gunicorn app:solver_api
