@@ -1,0 +1,15 @@
+bikinematicsolver==0.0.2
+click==8.0.1
+colorama==0.4.4
+Dijkstar==2.6.0
+Flask==2.0.1
+gunicorn==20.1.0
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+numpy==1.21.1
+pkg-resources==0.0.0
+python-dotenv==0.17.1
+scipy==1.7.1
+six==1.16.0
+Werkzeug==2.0.1
