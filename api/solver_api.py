@@ -29,7 +29,7 @@ def write_db(query, args=()):
     get_db().commit()
     return {'msg':'write_db executed'}
 
-app = Flask(__name__, static_folder = './build', static_url_path = '/')
+app = Flask(__name__, static_folder = '../build', static_url_path = '/')
 
 @app.teardown_appcontext
 #close databse on context end
@@ -37,10 +37,6 @@ def close_connection(exception):
     db = getattr(g,'_database',None)
     if db is not None:
         db.close()
-
-@app.errorhandler(404)
-def not_found(e):
-    return app.send_static_file('index.html')
 
 @app.route('/')
 def index():
