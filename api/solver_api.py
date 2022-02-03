@@ -31,9 +31,6 @@ def write_db(query, args=()):
 
 app = Flask(__name__, static_folder = './build', static_url_path = '/')
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
-
 @app.teardown_appcontext
 #close databse on context end
 def close_connection(exception):
@@ -88,3 +85,6 @@ def save_bike_data():
         write_db("INSERT INTO bike_data VALUES (?, ?)",[1,1,json.dumps(data)])
         return write_db("INSERT INTO bike_data VALUES (?, ?)",[1,1,json.dumps(data)])
     return {'msg':'Could not save'}
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
