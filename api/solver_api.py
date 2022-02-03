@@ -42,10 +42,6 @@ def close_connection(exception):
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/api')
-def index():
-    return {'Status':'OK'}
-
 @app.route('/api/solve')
 def solve():
     """
