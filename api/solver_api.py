@@ -29,7 +29,7 @@ def write_db(query, args=()):
     get_db().commit()
     return {'msg':'write_db executed'}
 
-app = Flask(__name__, static_folder = '../build', static_url_path = '/')
+app = Flask(__name__, static_folder = '../app/build', static_url_path = '/')
 
 @app.teardown_appcontext
 #close databse on context end
