@@ -26,7 +26,8 @@ import './dnd.css';
   export default function BikeFlowChart({bikeData,
                                          setBikeData,
                                          clearBikeData,
-                                         clearSolutionData}) {
+                                         clearSolutionData,
+                                         debug}) {
 
 
     const[select0,setSelect0] = useState(null);
@@ -43,7 +44,6 @@ import './dnd.css';
       chainring_teeth: 30,
       cassette_teeth: 52,
       wheel_size: 29,
-      p2mm: 1.3379530916844349,
       cog_height: 1100
     })
 
@@ -156,6 +156,18 @@ import './dnd.css';
     return(
       <div className="dndflow">
         <ReactFlowProvider>
+          {debug ?
+          <ToolbarFlow 
+            addLink = {addLink}
+            addShock = {addShock} 
+            clearAll = {clearAll} 
+            setSelect0 = {setSelect0} 
+            setSelect1 = {setSelect1}
+            params = {params}
+            setParams = {setParams}
+            changeFlag = {changeFlag}
+            setChangeFlag = {setChangeFlag}/> : null
+          }
           <div className="reactflow-wrapper" ref = {reactFlowWrapper}>
             <ReactFlow
               elements={elements}
@@ -174,17 +186,6 @@ import './dnd.css';
               backgroundSize: `100% auto`}}/>
             </ReactFlow>
           </div>
-          <ToolbarFlow 
-            addLink = {addLink}
-            addShock = {addShock} 
-            clearAll = {clearAll} 
-            setSelect0 = {setSelect0} 
-            setSelect1 = {setSelect1}
-            params = {params}
-            setParams = {setParams}
-            changeFlag = {changeFlag}
-            setChangeFlag = {setChangeFlag}
-          />
         <BikeFlowUpdateHandler
           bikeData={bikeData}
           setBikeData = {setBikeData}

@@ -9,14 +9,14 @@
   background-color: #0d1f2d;
   display: grid;
 
-  grid-template-columns: 50% 10% 1fr;
+  grid-template-columns: 50% 1fr;
   grid-template-rows: 60px 1fr;
 
   grid-template-areas: 
-    "top top top"
-    "left left right";
+    "top top"
+    "left right";
 
-  height: 100vh;
+  height: auto;
 
   }
 

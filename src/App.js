@@ -9,6 +9,7 @@ function App() {
 
   const [bikeData,setBikeData] = useState(null);
   const [solution,setSolution] = useState({});
+  const [debug,setDebug] = useState(false);
 
   const clearBikeData = () => {setBikeData(null)} 
   const clearSolutionData = () => {setSolution({})}
@@ -16,13 +17,17 @@ function App() {
   const travel = 170; //unhardcode as well pls
   const results = ["LeverageRatio", 'AntiSquatPercent',"VerticalTravel"];
 
+  useEffect( () => {
+    fetchBikeData(1);
+  },[]);
+
   useEffect(() => {
     console.log(bikeData)
     solveBikeData();
   },[bikeData]);
 
-  const fetchBikeData =  () => {
-    fetch(`/api/getbikedata`)
+  const fetchBikeData =  (id) => {
+    fetch(`/api/getbikedata?id=${encodeURIComponent(id)}`)
     .then(res => res.json())
     .then(data => {setBikeData(data);
     });
@@ -41,6 +46,8 @@ function App() {
       <div class = "grid-container">
         <Top
           fetchBikeData = {fetchBikeData}
+          setDebug = {setDebug}
+          debug={debug}
         />
         <div class = "left">
           <BikeFlowChart
@@ -48,6 +55,7 @@ function App() {
             setBikeData = {setBikeData}
             clearBikeData = {clearBikeData}
             clearSolutionData = {clearSolutionData}
+            debug={debug}
           />
         </div>
         <div class = "right">

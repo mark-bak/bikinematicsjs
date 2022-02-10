@@ -67,7 +67,7 @@ export default function SyncLineChart(props) {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis type = "number" dataKey={travel_key} domain = {['auto', 'auto']} ticks = {_linspace(max_travel,max_travel/20+1)}/>
         <YAxis type = "number" domain={['auto', 'auto']} allowDataOverflow={true}/>
-        <Tooltip labelFormatter={(label) => "Travel: " + label} contentStyle = {{'color':'#E4C3AD','background-color': '#546A7B'}} itemStyle = {{'color':'#E4C3AD'}} />
+        <Tooltip formatter = {(label) => Math.round(label*100)/100} labelFormatter={(label) => "Travel: " + Math.round(label*100)/100} contentStyle = {{'color':'#E4C3AD','background-color': '#546A7B'}} itemStyle = {{'color':'#E4C3AD'}} />
         <Line dataKey={lr_key} stroke="#8884d8" fill="#8884d8" dot = {false} />
       </LineChart>
     </ResponsiveContainer>
@@ -90,7 +90,7 @@ export default function SyncLineChart(props) {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis type = "number" dataKey={travel_key} domain = {['auto', 'auto']} ticks = {_linspace(max_travel,max_travel/20+1)}/>
         <YAxis type= "number" domain = {['auto', 'auto']}/>
-        <Tooltip  labelFormatter={(label) => "Travel: " + label}contentStyle = {{'color':'#E4C3AD','background-color': '#546A7B'}} itemStyle = {{'color':'#E4C3AD'}} />
+        <Tooltip  formatter = {(label) => Math.round(label*100)/100}labelFormatter={(label) => "Travel: " + Math.round(label*100)/100} contentStyle = {{'color':'#E4C3AD','background-color': '#546A7B'}} itemStyle = {{'color':'#E4C3AD'}} />
         <Line  dataKey={as_key} stroke="#82ca9d" fill="#82ca9d" dot = {false} />
       </LineChart>
     </ResponsiveContainer>

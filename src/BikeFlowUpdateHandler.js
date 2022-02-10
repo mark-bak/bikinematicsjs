@@ -46,7 +46,6 @@ export default function BikeFlowUpdateHandler ({shock,
             chainring_teeth: params.chainring_teeth,
             cassette_teeth: params.cassette_teeth,
             wheel_size: params.wheel_size,
-            p2mm: 1.3379530916844349,
             cog_height: params.cog_height
             }; //unhardcode these i beg you at some point
 
