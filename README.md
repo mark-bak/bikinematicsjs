@@ -1,3 +1,6 @@
+# Site
+The wip site can be found at http://bikinematics.herokuapp.com/
+
 # Required installs
 
 ```
