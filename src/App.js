@@ -46,6 +46,7 @@ function App() {
       <div class = "grid-container">
         <Top
           fetchBikeData = {fetchBikeData}
+          clearBikeData= {clearBikeData}
           setDebug = {setDebug}
           debug={debug}
         />

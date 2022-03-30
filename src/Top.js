@@ -7,8 +7,12 @@ export default function Top({fetchBikeData,clearBikeData,clearSolutionData,setDe
     return(
         <div class = "top">
         <button className = "top-button" onClick = {() => {fetchBikeData(1)}}>
-            Load Example 1
-        </button>
+            Load Example
+        </button> 
+        <button className = "top-button" onClick = {() => {clearBikeData()}}>
+            Clear
+        </button> 
+        {/*
         <button className = "top-button" onClick = {() => {fetchBikeData(2)}}>
             Load Example 2
         </button>
@@ -23,11 +27,15 @@ export default function Top({fetchBikeData,clearBikeData,clearSolutionData,setDe
         <button  className = "top-button"//onClick = {}
         >
             Choose Image
-        </button>
+        </button> 
+        */}
         <button  className = "top-button" onClick = {() => setDebug(!debug)}
         >
         DEBUG {debug? <>on</>: <>off</>}
-        </button>
+        </button> 
+        <description className = "description">
+        &nbsp; Drag points to recalculate results (may take a few seconds)
+        </description>
         </div>
         
     )
