@@ -83,7 +83,6 @@ def get_bike_data():
 def save_bike_data():
     data = json.loads(request.args['bike_data'])
     if data != 'empty':
-        write_db("INSERT INTO bike_data VALUES (?, ?)",[1,1,json.dumps(data)])
         return write_db("INSERT INTO bike_data VALUES (?, ?)",[1,1,json.dumps(data)])
     return {'msg':'Could not save'}
 
