@@ -76,7 +76,7 @@ def solve():
 @app.route('/api/getbikedata')
 def get_bike_data():
     id_no = request.args['id']
-    dbquery = query_db("SELECT * FROM bike_data WHERE id_no={n}".format(n=id_no),one=True) #pretty sure this is vuln to sql injection - need to chekc
+    dbquery = query_db("SELECT * FROM bike_data WHERE id_no= (?)",args = [id_no], one=True) #pretty sure this is vuln to sql injection - need to chekc
     return dbquery['data']
 
 @app.route('/api/savebikedata')
