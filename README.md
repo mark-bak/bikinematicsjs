@@ -1,5 +1,6 @@
 # Site
-The wip site can be found at https://bikinematics.fly.dev/
+The wip site can be found [here](https://bikinematics.fly.dev/)
+
 # Required installs
 
 ```
