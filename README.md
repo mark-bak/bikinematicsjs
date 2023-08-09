@@ -1,5 +1,5 @@
 # Site
-The wip site can be found at http://bikinematics.herokuapp.com/
+The wip site can be found at http://bikinematics.herokuapp.com/](https://bikinematics.fly.dev/
 
 # Required installs
 
